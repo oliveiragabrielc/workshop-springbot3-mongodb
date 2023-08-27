@@ -1,12 +1,17 @@
 package com.oliveiragabrielc.workshopmongo.config;
 
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import com.oliveiragabrielc.workshopmongo.domain.Post;
 import com.oliveiragabrielc.workshopmongo.domain.User;
+import com.oliveiragabrielc.workshopmongo.repositories.PostRepository;
 import com.oliveiragabrielc.workshopmongo.repositories.UserRepository;
 
 @Configuration
@@ -14,9 +19,14 @@ public class Instantiation implements CommandLineRunner {
 	
 	@Autowired	
 	private UserRepository userRepository;
+	
+	@Autowired
+	private PostRepository postRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
+		
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		
 		userRepository.deleteAll();
 		
@@ -25,8 +35,11 @@ public class Instantiation implements CommandLineRunner {
 		User bob = new User(null, "Bob Grey", "bob@gmail.com");
 		
 		userRepository.saveAll(Arrays.asList(maria,alex,bob));
-
 		
+		Post post1 = new Post(null, LocalDate.parse("21/03/2018", df), "Partiu viagem", "Vou viajar para São Paulo. Abraços!", maria);
+		Post post2 = new Post(null, LocalDate.parse("23/03/2018",df), "Bom dia", "Acordei feliz hoje!",maria);
+
+		postRepository.saveAll(Arrays.asList(post1,post2));
 	}
 
 }

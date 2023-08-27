@@ -4,24 +4,31 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "post")
 public class Post implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
+	@Id
 	private String id;
 	private LocalDate date;
 	private String title;
 	private String body;
 	
+	private User user;
+	
 	public Post() {}
 
-	public Post(String id, LocalDate date, String title, String body) {
+	public Post(String id, LocalDate date, String title, String body, User user) {
 		super();
 		this.id = id;
 		this.date = date;
 		this.title = title;
 		this.body = body;
+		this.user = user;
 	}
 
 	public String getId() {
@@ -54,6 +61,10 @@ public class Post implements Serializable {
 
 	public void setBody(String body) {
 		this.body = body;
+	}
+	
+	public User getUser() {
+		return user;
 	}
 
 	@Override
