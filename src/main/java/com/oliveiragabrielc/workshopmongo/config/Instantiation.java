@@ -29,6 +29,7 @@ public class Instantiation implements CommandLineRunner {
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		
 		userRepository.deleteAll();
+		postRepository.deleteAll();
 		
 		User maria = new User(null, "Maria Brown", "maria@gmail.com");
 		User alex = new User(null, "Alex Green", "alex@gmail.com");
@@ -38,8 +39,13 @@ public class Instantiation implements CommandLineRunner {
 		
 		Post post1 = new Post(null, LocalDate.parse("21/03/2018", df), "Partiu viagem", "Vou viajar para São Paulo. Abraços!", maria);
 		Post post2 = new Post(null, LocalDate.parse("23/03/2018",df), "Bom dia", "Acordei feliz hoje!",maria);
-
+		
 		postRepository.saveAll(Arrays.asList(post1,post2));
+	
+		maria.getPosts().add(post1);
+		maria.getPosts().add(post2);
+
+		userRepository.save(maria);
 	}
 
 }

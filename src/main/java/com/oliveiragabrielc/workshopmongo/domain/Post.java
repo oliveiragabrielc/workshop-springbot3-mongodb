@@ -7,17 +7,17 @@ import java.util.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "post")
+@Document
 public class Post implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	private String id;
+	
 	private LocalDate date;
 	private String title;
 	private String body;
-	
 	private User user;
 	
 	public Post() {}
@@ -83,4 +83,10 @@ public class Post implements Serializable {
 		Post other = (Post) obj;
 		return Objects.equals(id, other.id);
 	}
+
+	@Override
+	public String toString() {
+		return "Post [id=" + id + ", date=" + date + ", title=" + title + ", body=" + body + ", user=" + user + "]";
+	}
+	
 }
